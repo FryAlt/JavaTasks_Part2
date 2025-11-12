@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Главная страница</title>
+    </head>
+    <body>
+    <h1>Библиотека</h1>
+
+    <h2>Авторы</h2>
+    <ul>
+        <li th:each="a : ${authors}">
+            <span th:text="${a.name}"></span>
+        </li>
+        </ul>
+
+        <h2>Книги</h2>
+        <ul>
+            <li th:each="b : ${books}">
+                <span th:text="${b.title}"></span> —
+                автор: <span th:text="${b.author.name}"></span>
+            </li>
+        </ul>
+
+        <a href="/authors">Перейти к авторам</a>
+        <br>
+        <a href="/books">Перейти к книгам</a>
+    </body>
+</html>

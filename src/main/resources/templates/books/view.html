@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр книги</title>
+</head>
+<body>
+<h1>Информация о книги</h1>
+
+<p><strong>ID:</strong> <span th:text="${book.id}"></span></p>
+<p><strong>Название:</strong> <span th:text="${book.title}"></span></p>
+
+<h2>Автор</h2>
+<ul>
+    <li th:each="a : ${book.author}" th:text="${a.name}"></li>
+</ul>
+
+<a href="/books">Назад</a>
+</body>
+</html>
