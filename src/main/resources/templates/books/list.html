@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Список книг</title>
 </head>
 <body>
 <h1>Книги</h1>
-
-<a href="/books/create">Добавить новую книгу</a>
+<div sec:authorize="hasRole('ADMIN')">
+    <a href="/books/create">Добавить новую книгу</a>
+</div>
 
 <table border="1" cellpadding="5">
     <thead>
@@ -24,10 +26,12 @@
         <td th:text="${b.title}"></td>
         <td th:text="${b.author != null ? b.author.name : 'Не указан'}"></td>
         <td>
-            <a th:href="@{'/books/' + ${b.id}}">Просмотр</a> |
-            <a th:href="@{'/books/edit/' + ${b.id}}">Редактировать</a> |
-            <a th:href="@{'/books/delete/' + ${b.id}}"
-               onclick="return confirm('Удалить книгу?');">Удалить</a>
+            <a th:href="@{'/books/' + ${b.id}}">Просмотр</a>
+            <div sec:authorize="hasRole('ADMIN')">
+                | <a th:href="@{'/books/edit/' + ${b.id}}">Редактировать</a> |
+                <a th:href="@{'/books/delete/' + ${b.id}}"
+                   onclick="return confirm('Удалить книгу?');">Удалить</a>
+            </div>
         </td>
     </tr>
     </tbody>

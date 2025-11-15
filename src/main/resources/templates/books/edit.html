@@ -8,14 +8,13 @@
 <h1>Редактирование книги</h1>
 
 <form th:action="@{'/books/update/' + ${book.id}}" th:object="${book}" method="post">
-    <label>ID:</label><br>
-    <input type="text" th:field="*{id}" readonly><br><br>
+    <label><strong>ID:</strong> <span th:text="*{id}">—</span></label><br><br>
 
     <label>Название:</label><br>
     <input type="text" th:field="*{title}" required><br><br>
 
     <label>Автор:</label><br>
-    <select th:field="*{author}" size="1" required style="min-width: 200px; max-width: 100%;">
+    <select th:field="*{author}" size="1" required>
         <option th:each="author : ${authors}"
                 th:value="${author.id}"
                 th:text="${author.name}">

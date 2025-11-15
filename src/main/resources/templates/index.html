@@ -1,29 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <title>Главная страница</title>
-    </head>
-    <body>
-    <h1>Библиотека</h1>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+</head>
+<body>
+<div sec:authorize="isAuthenticated()">
+    Привет, <span sec:authentication="name"></span>!
+    <span sec:authorize="hasRole('ADMIN')">[Администратор]</span>
+    <form th:action="@{/logout}" method="post" style="display:inline;">
+        <button type="submit">Выйти</button>
+    </form>
+</div>
+<div sec:authorize="!isAuthenticated()">
+    <a th:href="@{/login}">Войти</a> | <a th:href="@{/register}">Зарегистрироваться</a>
+</div>
 
-    <h2>Авторы</h2>
-    <ul>
-        <li th:each="a : ${authors}">
-            <span th:text="${a.name}"></span>
-        </li>
-        </ul>
+<h1>Библиотека</h1>
 
-        <h2>Книги</h2>
-        <ul>
-            <li th:each="b : ${books}">
-                <span th:text="${b.title}"></span> —
-                автор: <span th:text="${b.author.name}"></span>
-            </li>
-        </ul>
+<a href="/authors">Управление авторами</a> |
+<a href="/books">Управление книгами</a>
 
-        <a href="/authors">Перейти к авторам</a>
-        <br>
-        <a href="/books">Перейти к книгам</a>
-    </body>
+<h2>Авторы</h2>
+<ul>
+    <li th:each="a : ${authors}">
+        <a th:href="@{/authors/{id}(id=${a.id})}" th:text="${a.name}"></a>
+    </li>
+</ul>
+
+<h2>Книги</h2>
+<ul>
+    <li th:each="b : ${books}">
+        <a th:href="@{/books/{id}(id=${b.id})}" th:text="${b.title}"></a> —
+        автор:
+        <span th:if="${b.author == null}">не указан</span>
+        <a th:if="${b.author != null}"
+           th:href="@{/authors/{id}(id=${b.author.id})}"
+           th:text="${b.author.name}"></a>
+    </li>
+</ul>
+
+</body>
 </html>
