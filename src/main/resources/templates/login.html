@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Вход</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h2>Войдите в систему</h2>
+<h2 style="text-align: center;">Войдите в систему</h2>
 <form th:action="@{/login}" method="post">
     <div>
         <label>Имя пользователя:</label>
@@ -25,6 +26,8 @@
     Вы успешно вышли из системы.
 </div>
 <br>
-<a href="/register">Нет аккаунта? Зарегистрироваться</a>
+<div style="text-align:center">
+    <a href="/register">Нет аккаунта? Зарегистрироваться</a>
+</div>
 </body>
 </html>

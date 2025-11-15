@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Главная страница</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css(v=2)}">
 </head>
 <body>
 <div sec:authorize="isAuthenticated()">
     Привет, <span sec:authentication="name"></span>!
     <span sec:authorize="hasRole('ADMIN')">[Администратор]</span>
     <form th:action="@{/logout}" method="post" style="display:inline;">
-        <button type="submit">Выйти</button>
+        <button type="submit" class="btn-link">Выйти</button>
     </form>
 </div>
 <div sec:authorize="!isAuthenticated()">
@@ -19,27 +20,32 @@
 
 <h1>Библиотека</h1>
 
-<a href="/authors">Управление авторами</a> |
-<a href="/books">Управление книгами</a>
-
-<h2>Авторы</h2>
-<ul>
-    <li th:each="a : ${authors}">
-        <a th:href="@{/authors/{id}(id=${a.id})}" th:text="${a.name}"></a>
-    </li>
-</ul>
-
-<h2>Книги</h2>
-<ul>
-    <li th:each="b : ${books}">
-        <a th:href="@{/books/{id}(id=${b.id})}" th:text="${b.title}"></a> —
-        автор:
-        <span th:if="${b.author == null}">не указан</span>
-        <a th:if="${b.author != null}"
-           th:href="@{/authors/{id}(id=${b.author.id})}"
-           th:text="${b.author.name}"></a>
-    </li>
-</ul>
-
+<table width="100%" cellspacing="0" cellpadding="5">
+<tr>
+    <td valign="top">
+        <a href="/authors">Управление авторами</a>
+        <h2>Авторы</h2>
+        <ul>
+            <li th:each="a : ${authors}">
+                <a th:href="@{/authors/{id}(id=${a.id})}" th:text="${a.name}"></a>
+            </li>
+        </ul>
+    </td>
+    <td valign="top">
+        <a href="/books">Управление книгами</a>
+        <h2>Книги</h2>
+        <ul>
+            <li th:each="b : ${books}">
+                <a th:href="@{/books/{id}(id=${b.id})}" th:text="${b.title}"></a> —
+                автор:
+                <span th:if="${b.author == null}">не указан</span>
+                <a th:if="${b.author != null}"
+                   th:href="@{/authors/{id}(id=${b.author.id})}"
+                   th:text="${b.author.name}"></a>
+            </li>
+        </ul>
+    </td>
+</tr>
+</table>
 </body>
 </html>

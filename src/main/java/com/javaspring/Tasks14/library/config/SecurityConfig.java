@@ -23,7 +23,7 @@ public class SecurityConfig {
         http
                 .userDetailsService(userDetailsService)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/error").permitAll()
+                        .requestMatchers("/login", "/register", "/error", "/css/**").permitAll()
                         .requestMatchers("/authors", "/authors/**", "/books", "/books/**").permitAll()
                         .requestMatchers(
                                 "/authors/create", "/authors/edit/**", "/authors/delete/**",
@@ -38,7 +38,9 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/?logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
                 );
         return http.build();

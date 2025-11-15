@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Список авторов</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 <h1>Авторы</h1>
+<a href="/">На главную</a>
 <div sec:authorize="hasRole('ADMIN')">
     <a href="/authors/create">Добавить нового автора</a>
 </div>
@@ -25,16 +27,15 @@
         <td th:text="${a.name}"></td>
         <td>
             <a th:href="@{'/authors/' + ${a.id}}">Просмотр</a>
-            <div sec:authorize="hasRole('ADMIN')">
-                | <a th:href="@{'/authors/edit/' + ${a.id}}">Редактировать</a> |
-                <a th:href="@{'/authors/delete/' + ${a.id}}"
-                   onclick="return confirm('Удалить автора?');">Удалить</a>
-            </div>
+            <span sec:authorize="hasRole('ADMIN')">
+            | <a th:href="@{'/authors/edit/' + ${a.id}}">Редактировать</a> |
+            <a th:href="@{'/authors/delete/' + ${a.id}}"
+            onclick="return confirm('Удалить автора?');">Удалить</a>
+    </span>
         </td>
     </tr>
     </tbody>
 </table>
 
-<a href="/">На главную</a>
 </body>
 </html>
