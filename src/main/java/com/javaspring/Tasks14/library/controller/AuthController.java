@@ -35,12 +35,13 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "register";
         }
-        // Проверка уникальности username (опционально)
+
         if (userService.findByUsername(user.getUsername()) != null) {
             model.addAttribute("errorMessage", "Пользователь с таким именем уже существует");
             return "register";
         }
-        user.setIsAdmin(false); // обычный пользователь
+
+        user.setIsAdmin(false);
         userService.save(user);
         return "redirect:/login?registered";
     }
